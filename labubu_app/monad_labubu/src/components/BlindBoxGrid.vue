@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 p-4 sm:p-6 lg:p-12 gap-8 sm:gap-12 lg:gap-16 bg-gradient-to-br from-blue-50 to-purple-100 min-h-screen">
+  <div class="grid grid-cols-3 p-4 sm:p-6 lg:p-12 gap-8 sm:gap-12 lg:gap-16 bg-gradient-to-br from-blue-2 to-purple-2 min-h-screen">
     <!-- 左侧：盲盒网格或开奖结果 -->
     <div class="w-[20rem] sm:w-[24rem] lg:w-[32rem] flex flex-col justify-center items-center">
       <!-- 九宫格 -->
@@ -7,11 +7,11 @@
         <button
             v-for="(box, index) in boxes"
             :key="index"
-            class="relative w-20 sm:w-24 lg:w-28 h-20 sm:h-24 lg:h-28 bg-white rounded-lg shadow-md cursor-pointer border transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            class="relative w-20 sm:w-24 lg:w-28 h-20 sm:h-24 lg:h-28 bg-white rounded-lg shadow-md cursor-pointer border transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-9/50"
             :class="{
-            'border-primary ring-4 ring-primary/30': selectedIndex === index,
-            'border-gray-200': selectedIndex !== index,
-          }"
+              'border-blue-9 ring-4 ring-blue-9/30': selectedIndex === index,
+              'border-gray-3': selectedIndex !== index,
+            }"
             @click="selectBox(index)"
             :aria-label="`选择盲盒 ${index + 1}`"
         >
@@ -29,7 +29,7 @@
         <div
             v-for="(box, index) in boxes"
             :key="index"
-            class="relative w-20 sm:w-24 lg:w-28 h-20 sm:h-24 lg:h-28 bg-white rounded-lg border border-gray-200"
+            class="relative w-20 sm:w-24 lg:w-28 h-20 sm:h-24 lg:h-28 bg-white rounded-lg border border-gray-3"
         ></div>
       </div>
       <!-- 开奖动画 -->
@@ -53,7 +53,7 @@
         />
       </div>
       <!-- 提示信息 -->
-      <div v-if="message" class="mt-6 sm:mt-8 text-base sm:text-lg font-semibold text-center text-gray-900 prose prose-sm sm:prose">
+      <div v-if="message" class="mt-6 sm:mt-8 text-base sm:text-lg font-semibold text-center text-gray-12 prose prose-sm sm:prose">
         {{ message }}
       </div>
     </div>
@@ -64,26 +64,26 @@
     <!-- 右侧：盲盒机器界面 -->
     <div class="w-[20rem] sm:w-[24rem] flex flex-col justify-center">
       <div class="bg-white p-8 sm:p-10 rounded-2xl shadow-lg">
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 text-center text-gray-900 tracking-tight">盲盒机器</h2>
-        <div class="text-center mb-10 bg-gray-50 py-8 rounded-lg">
-          <p v-if="selectedIndex === null && !revealedPrize && !isCycling" class="text-base sm:text-lg text-gray-600">请选择一个盲盒</p>
-          <p v-else-if="!isCycling && !revealedPrize" class="text-base sm:text-lg text-gray-600">已选择 #{{ selectedIndex + 1 }}，准备开启！</p>
-          <p v-else-if="isCycling" class="text-base sm:text-lg text-primary font-semibold animate-pulse">盲盒开启中...</p>
-          <p v-else class="text-base sm:text-lg text-secondary font-semibold">请完成Twitter验证以继续</p>
-          <p v-if="isLoggedIn" class="mt-4 text-sm sm:text-base text-gray-700 font-medium">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 text-center text-gray-12 tracking-tight">Labubu 盲盒</h2>
+        <div class="text-center mb-10 bg-gray-1 py-8 rounded-lg">
+          <p v-if="selectedIndex === null && !revealedPrize && !isCycling" class="text-base sm:text-lg text-gray-7">请选择一个盲盒</p>
+          <p v-else-if="!isCycling && !revealedPrize" class="text-base sm:text-lg text-gray-7">已选择 #{{ selectedIndex + 1 }}，准备开启！</p>
+          <p v-else-if="isCycling" class="text-base sm:text-lg text-blue-9 font-semibold animate-pulse">盲盒开启中...</p>
+          <p v-else class="text-base sm:text-lg text-green-9 font-semibold">请完成验证以领取 Labubu NFT</p>
+          <p v-if="isLoggedIn" class="mt-4 text-sm sm:text-base text-gray-8 font-medium">
             已连接钱包: {{ userAddress.slice(0, 6) }}...{{ userAddress.slice(-4) }}
           </p>
         </div>
         <div v-if="!isCycling && !revealedPrize" class="flex justify-center gap-4 sm:gap-6">
           <button
               v-if="selectedIndex !== null"
-              class="px-6 sm:px-8 py-3 sm:py-4 bg-gray-200 rounded-lg text-base sm:text-lg font-medium text-gray-800 hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+              class="px-6 sm:px-8 py-3 sm:py-4 bg-gray-3 rounded-lg text-base sm:text-lg font-medium text-gray-9 hover:bg-gray-4 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-6"
               @click="cancelSelection"
           >
             取消
           </button>
           <button
-              class="px-6 sm:px-8 py-3 sm:py-4 bg-primary text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              class="px-6 sm:px-8 py-3 sm:py-4 bg-blue-9 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-10 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-9/50"
               :disabled="selectedIndex === null"
               @click="startCycle"
           >
@@ -92,33 +92,46 @@
         </div>
         <div v-else-if="revealedPrize" class="flex flex-col gap-6 sm:gap-8">
           <div class="flex items-center justify-between">
-            <span class="text-base sm:text-lg font-medium" :class="{ 'text-secondary': isLoggedIn, 'text-gray-600': !isLoggedIn }">
+            <span class="text-base sm:text-lg font-medium" :class="{ 'text-green-9': isLoggedIn, 'text-gray-7': !isLoggedIn }">
               {{ isLoggedIn ? `✔ 已连接钱包` : '1. 连接钱包' }}
             </span>
             <button
                 v-if="!isLoggedIn"
-                class="px-4 sm:px-6 py-2 sm:py-3 bg-primary text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+                class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-9 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-10 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-9/50"
                 @click="loginWallet"
             >
               连接
             </button>
           </div>
           <div class="flex items-center justify-between">
-            <span class="text-base sm:text-lg font-medium" :class="{ 'text-secondary': isTwitterVerified, 'text-gray-600': !isTwitterVerified }">
-              {{ isTwitterVerified ? '✔ 已验证Twitter' : '2. 验证Twitter' }}
+            <span class="text-base sm:text-lg font-medium" :class="{ 'text-green-9': isTwitterVerified, 'text-gray-7': !isTwitterVerified }">
+              {{ isTwitterVerified ? `✔ 已验证Twitter: @${twitterUsername}` : '2. 验证Twitter' }}
             </span>
             <button
                 v-if="!isTwitterVerified"
-                class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-400 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-500 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400/50"
+                class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-8 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-9 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-8/50"
                 :disabled="!isLoggedIn || isVerifying"
                 @click="verifyTwitter"
             >
               {{ isVerifying ? '验证中...' : '验证' }}
             </button>
           </div>
+          <div class="flex items-center justify-between">
+            <span class="text-base sm:text-lg font-medium" :class="{ 'text-green-9': isNFTClaimed, 'text-gray-7': !isNFTClaimed }">
+              {{ isNFTClaimed ? `✔ 已领取 Labubu NFT` : '3. 领取你的 Labubu NFT' }}
+            </span>
+            <button
+                v-if="isLoggedIn && isTwitterVerified && !isNFTClaimed"
+                class="px-4 sm:px-6 py-2 sm:py-3 bg-green-9 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-green-10 transition-colors focus:outline-none focus:ring-2 focus:ring-green-9/50"
+                :disabled="isClaiming"
+                @click="claimNFT"
+            >
+              {{ isClaiming ? '领取中...' : '领取' }}
+            </button>
+          </div>
           <button
-              v-if="isLoggedIn && isTwitterVerified"
-              class="px-6 sm:px-8 py-3 sm:py-4 bg-secondary text-white rounded-lg text-base sm:text-lg font-medium mt-8 hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/50"
+              v-if="isLoggedIn && isTwitterVerified && isNFTClaimed"
+              class="px-6 sm:px-8 py-3 sm:py-4 bg-green-9 text-white rounded-lg text-base sm:text-lg font-medium mt-8 hover:bg-green-10 transition-colors focus:outline-none focus:ring-2 focus:ring-green-9/50"
               @click="retryGame"
           >
             再次尝试
@@ -127,41 +140,29 @@
       </div>
     </div>
   </div>
+  <!-- Toast 组件 -->
+  <Toast :message="toastMessage" :type="toastType" :visible="toastVisible" @close="toastVisible = false" />
 </template>
 
 <script setup>
-import {ref} from 'vue';
-import {ethers} from 'ethers';
-import {PrimusZKTLS} from '@primuslabs/zktls-js-sdk';
+import { ref } from 'vue';
+import { ethers } from 'ethers';
+import { PrimusZKTLS } from '@primuslabs/zktls-js-sdk';
+import { switchToMonadTestnet } from './config';
+import { claimLabubuNFT } from './claim';
+import { waitForWallet } from '../utils/walletDetection';
+import Toast from './Toast.vue';
 
 // 动态加载图片
-const images = import.meta.glob('/src/assets/*.png', {eager: true});
+const images = import.meta.glob('/src/assets/*.png', { eager: true });
 const backImage = images['/src/assets/box2.png']?.default || 'https://via.placeholder.com/80?text=盲盒';
 const prizes = [
-  {
-    name: 'Labubu 1',
-    image: images['/src/assets/labubu1.png']?.default || 'https://via.placeholder.com/500?text=Labubu1'
-  },
-  {
-    name: 'Labubu 2',
-    image: images['/src/assets/labubu2.png']?.default || 'https://via.placeholder.com/500?text=Labubu2'
-  },
-  {
-    name: 'Labubu 3',
-    image: images['/src/assets/labubu3.png']?.default || 'https://via.placeholder.com/500?text=Labubu3'
-  },
-  {
-    name: 'Labubu 4',
-    image: images['/src/assets/labubu4.png']?.default || 'https://via.placeholder.com/500?text=Labubu4'
-  },
-  {
-    name: 'Labubu 5',
-    image: images['/src/assets/labubu5.png']?.default || 'https://via.placeholder.com/500?text=Labubu5'
-  },
-  {
-    name: 'Labubu 6',
-    image: images['/src/assets/labubu6.png']?.default || 'https://via.placeholder.com/500?text=Labubu6'
-  },
+  { name: 'Labubu 1', image: images['/src/assets/labubu1.png']?.default || 'https://via.placeholder.com/500?text=Labubu1' },
+  { name: 'Labubu 2', image: images['/src/assets/labubu2.png']?.default || 'https://via.placeholder.com/500?text=Labubu2' },
+  { name: 'Labubu 3', image: images['/src/assets/labubu3.png']?.default || 'https://via.placeholder.com/500?text=Labubu3' },
+  { name: 'Labubu 4', image: images['/src/assets/labubu4.png']?.default || 'https://via.placeholder.com/500?text=Labubu4' },
+  { name: 'Labubu 5', image: images['/src/assets/labubu5.png']?.default || 'https://via.placeholder.com/500?text=Labubu5' },
+  { name: 'Labubu 6', image: images['/src/assets/labubu6.png']?.default || 'https://via.placeholder.com/500?text=Labubu6' },
 ];
 
 // 调试图片加载
@@ -184,7 +185,24 @@ const revealedPrize = ref(null);
 const isLoggedIn = ref(false);
 const isTwitterVerified = ref(false);
 const isVerifying = ref(false);
-const userAddress = ref(null);
+const isNFTClaimed = ref(false);
+const isClaiming = ref(false);
+const userAddress = ref('');
+const twitterUsername = ref('');
+const attestationData = ref(null);
+const toastMessage = ref('');
+const toastType = ref('info'); // info, success, error
+const toastVisible = ref(false);
+
+// 显示 Toast
+const showToast = (msg, type = 'info') => {
+  toastMessage.value = msg;
+  toastType.value = type;
+  toastVisible.value = true;
+  setTimeout(() => {
+    toastVisible.value = false;
+  }, 3000);
+};
 
 // Primus ZK-TLS 配置
 const appId = "0x4bf0468034fd3e9cc4678915f25b253351c5a3ef";
@@ -194,11 +212,14 @@ const primusZKTLS = new PrimusZKTLS();
 // 初始化 Primus ZK-TLS
 const initPrimus = async () => {
   try {
+    if (!appId || !appSecret) {
+      throw new Error("appId or appSecret is not set.");
+    }
     const initAttestationResult = await primusZKTLS.init(appId, appSecret);
     console.log('Primus 初始化成功:', initAttestationResult);
   } catch (error) {
     console.error('Primus 初始化失败:', error);
-    message.value = 'ZK-TLS 初始化失败，请重试';
+    showToast('ZK-TLS 初始化失败，请重试', 'error');
   }
 };
 initPrimus();
@@ -251,7 +272,10 @@ const retryGame = () => {
   message.value = '';
   isLoggedIn.value = false;
   isTwitterVerified.value = false;
-  userAddress.value = null;
+  isNFTClaimed.value = false;
+  userAddress.value = '';
+  twitterUsername.value = '';
+  attestationData.value = null;
   boxes.value = Array(9)
       .fill()
       .map(() => ({
@@ -261,12 +285,25 @@ const retryGame = () => {
       }));
 };
 
-// 连接 MetaMask 钱包
+// 连接 MetaMask 或 OKX 钱包并切换到 Monad 测试网
 const loginWallet = async () => {
   try {
     if (!window.ethereum) {
-      message.value = '请安装 MetaMask 钱包！';
-      console.error('未检测到 MetaMask');
+      showToast('请安装 MetaMask 或 OKX 钱包！', 'error');
+      console.error('未检测到 MetaMask 或 OKX');
+      return;
+    }
+
+    const walletDetection = await waitForWallet(5000);
+    if (!walletDetection.isAvailable || !['MetaMask', 'OKX'].includes(walletDetection.walletType)) {
+      showToast('请使用 MetaMask 或 OKX 钱包！', 'error');
+      console.error('不支持的钱包:', walletDetection.walletType);
+      return;
+    }
+
+    const switched = await switchToMonadTestnet();
+    if (!switched) {
+      showToast('无法切换到 Monad 测试网，请手动切换网络', 'error');
       return;
     }
 
@@ -276,12 +313,12 @@ const loginWallet = async () => {
     if (accounts.length > 0) {
       userAddress.value = accounts[0];
       isLoggedIn.value = true;
-      message.value = `钱包已连接：${userAddress.value.slice(0, 6)}...${userAddress.value.slice(-4)}`;
+      showToast(`钱包已连接：${userAddress.value.slice(0, 6)}...${userAddress.value.slice(-4)}`, 'success');
     } else {
-      message.value = '无法连接钱包，请重试！';
+      showToast('无法连接钱包，请重试！', 'error');
     }
   } catch (error) {
-    message.value = '钱包连接失败，请检查 MetaMask 设置！';
+    showToast('钱包连接失败，请检查 MetaMask 或 OKX 设置！', 'error');
     console.error('钱包连接错误:', error);
   }
 };
@@ -289,12 +326,12 @@ const loginWallet = async () => {
 // Twitter 验证
 const verifyTwitter = async () => {
   if (!isLoggedIn.value || !userAddress.value) {
-    message.value = '请先连接钱包！';
+    showToast('请先连接钱包！', 'error');
     return;
   }
 
   isVerifying.value = true;
-  message.value = '正在进行 Twitter 验证...';
+  showToast('正在进行 Twitter 验证...', 'info');
 
   try {
     const attTemplateID = "2e3160ae-8b1e-45e3-8c59-426366278b9d";
@@ -317,23 +354,80 @@ const verifyTwitter = async () => {
       ],
     ]);
 
-    request.setAttMode({algorithmType: "proxytls"});
+    request.setAttMode({ algorithmType: "proxytls" });
     const requestStr = request.toJsonString();
     const signedRequestStr = await primusZKTLS.sign(requestStr);
     const attestation = await primusZKTLS.startAttestation(signedRequestStr);
+
+    console.log("attestation", JSON.stringify(attestation));
     const verifyResult = await primusZKTLS.verifyAttestation(attestation);
 
     if (verifyResult) {
       isTwitterVerified.value = true;
-      message.value = '✅ Twitter 验证成功！';
+      attestationData.value = attestation;
+      const attestationParsed = JSON.parse(attestation.extendedData || '{}');
+      twitterUsername.value = attestationParsed.screen_name || 'Unknown';
+      showToast(`✅ Twitter 验证成功！用户名: @${twitterUsername.value}`, 'success');
     } else {
-      message.value = '❌ Twitter 验证失败，请重试';
+      showToast('❌ Twitter 验证失败，请重试', 'error');
     }
   } catch (error) {
-    message.value = `验证失败：${error.message || '请重试'}`;
+    showToast(`验证失败：${error.message || '请重试'}`, 'error');
     console.error('Twitter 验证错误:', error);
   } finally {
     isVerifying.value = false;
+  }
+};
+
+// 领取 Labubu NFT
+const claimNFT = async () => {
+  if (!isLoggedIn.value || !isTwitterVerified.value || !userAddress.value || !attestationData.value) {
+    showToast('请先完成钱包连接和 Twitter 验证！', 'error');
+    return;
+  }
+
+  isClaiming.value = true;
+  showToast('正在检测钱包环境...', 'info');
+
+  try {
+    const walletDetection = await waitForWallet(5000);
+    if (!walletDetection.isAvailable || !['MetaMask', 'OKX'].includes(walletDetection.walletType)) {
+      showToast('请使用 MetaMask 或 OKX 钱包！', 'error');
+      console.error('不支持的钱包:', walletDetection.walletType);
+      return;
+    }
+
+    const switched = await switchToMonadTestnet();
+    if (!switched) {
+      showToast('无法切换到 Monad 测试网，请手动切换网络', 'error');
+      return;
+    }
+
+    showToast('正在领取 Labubu NFT...', 'info');
+
+    const nftId = 1; // 默认 NFT ID，可根据需求调整
+    const claimResult = await claimLabubuNFT(
+        attestationData.value,
+        nftId,
+        userAddress.value,
+        (txHash) => {
+          isNFTClaimed.value = true;
+          showToast(`🎉 Labubu NFT 领取成功！交易哈希: ${txHash}`, 'success');
+        },
+        (error) => {
+          showToast(error.message, 'error');
+          console.error('NFT 领取失败:', error);
+        }
+    );
+
+    if (!claimResult.success) {
+      showToast(claimResult.error, 'error');
+    }
+  } catch (error) {
+    showToast(`NFT 领取失败：${error.message || '请重试'}`, 'error');
+    console.error('NFT 领取错误:', error);
+  } finally {
+    isClaiming.value = false;
   }
 };
 
@@ -363,11 +457,11 @@ const handleImageError = (event) => {
 @keyframes reveal {
   0% {
     opacity: 0;
-    transform: scale(0.7) translateY(30px);
+    transform: scale(0.7) translate-y-8;
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: scale(1) translate-y-0;
   }
 }
 
