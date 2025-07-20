@@ -15,7 +15,7 @@ contract NFTClaim is ERC721, Ownable {
     mapping(uint256 => uint256) public tokenIdToNftId;
 
     uint256 public constant TOTAL_SUPPLY = 1000;
-    uint256 public constant MAX_NFT_ID = 8;
+    uint256 public constant MAX_NFT_ID = 5;
     uint256 public totalClaimed;
     address public primusAddress;
     string private _baseURIString;
@@ -52,10 +52,10 @@ contract NFTClaim is ERC721, Ownable {
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_ownerOf(tokenId) != address(0), "Token does not exist");
-        
+
         uint256 nftId = tokenIdToNftId[tokenId];
         string memory baseURI = _baseURI();
-        
+
         return bytes(baseURI).length > 0
             ? string(abi.encodePacked(baseURI, uint2str(nftId), ".json"))
             : "";
@@ -152,11 +152,11 @@ contract NFTClaim is ERC721, Ownable {
     ) {
         claimed = hasClaimed[user];
         totalOwnedCount = balanceOf(user);
-        
+
         if (totalOwnedCount > 0) {
             tokenIds = new uint256[](totalOwnedCount);
             nftIds = new uint256[](totalOwnedCount);
-            
+
             uint256 currentIndex = 0;
             for (uint256 i = 0; i < totalClaimed; i++) {
                 if (ownerOf(i) == user) {
@@ -194,7 +194,7 @@ contract NFTClaim is ERC721, Ownable {
         uint256 balance = balanceOf(user);
         tokenIds = new uint256[](balance);
         nftIds = new uint256[](balance);
-        
+
         uint256 currentIndex = 0;
         for (uint256 i = 0; i < totalClaimed; i++) {
             if (ownerOf(i) == user) {
@@ -204,4 +204,4 @@ contract NFTClaim is ERC721, Ownable {
             }
         }
     }
-} 
+}
