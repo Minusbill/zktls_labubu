@@ -1,11 +1,11 @@
-# Primus Project
+# Primus Project Labubu
 
 ## 项目结构
 
 ```
 primus_project/
 ├── app/                          # 前端应用
-│   ├── src/                      # React 组件和逻辑
+│   ├── src/                      # Vue 组件和逻辑
 │   ├── contracts/                # 合约 ABI 文件
 │   │   └── NFTClaim.abi.json    # NFT 合约 ABI
 │   ├── index.html               # 入口 HTML
