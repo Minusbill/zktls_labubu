@@ -1,147 +1,292 @@
 <template>
-  <div class="grid grid-cols-3 p-4 sm:p-6 lg:p-12 gap-8 sm:gap-12 lg:gap-16 bg-gradient-to-br from-blue-2 to-purple-2 min-h-screen">
-    <!-- 左侧：盲盒网格或开奖结果 -->
-    <div class="w-[20rem] sm:w-[24rem] lg:w-[32rem] flex flex-col justify-center items-center">
-      <!-- 九宫格 -->
-      <div v-if="!isCycling && !revealedPrize" class="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-5 w-fit mx-auto">
-        <button
-            v-for="(box, index) in boxes"
-            :key="index"
-            class="relative w-20 sm:w-24 lg:w-28 h-20 sm:h-24 lg:h-28 bg-white rounded-lg shadow-md cursor-pointer border transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-9/50"
-            :class="{
-              'border-blue-9 ring-4 ring-blue-9/30': selectedIndex === index,
-              'border-gray-3': selectedIndex !== index,
-            }"
-            @click="selectBox(index)"
-            :aria-label="`选择盲盒 ${index + 1}`"
-        >
-          <img
-              v-if="!box.isRevealed"
-              :src="backImage"
-              alt="盲盒"
-              class="object-cover rounded-lg w-full h-full"
-              @error="handleImageError"
-          />
-        </button>
-      </div>
-      <!-- 开奖动画占位符 -->
-      <div v-else-if="isCycling" class="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-5 w-fit mx-auto invisible">
-        <div
-            v-for="(box, index) in boxes"
-            :key="index"
-            class="relative w-20 sm:w-24 lg:w-28 h-20 sm:h-24 lg:h-28 bg-white rounded-lg border border-gray-3"
-        ></div>
-      </div>
-      <!-- 开奖动画 -->
-      <div v-if="isCycling" class="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-        <div class="relative w-28 sm:w-32 lg:w-36 h-28 sm:h-32 lg:h-36 bg-white rounded-xl shadow-2xl animate-cycle">
-          <img
-              :src="backImage"
-              alt="盲盒动画"
-              class="object-cover rounded-xl w-full h-full"
-              @error="handleImageError"
-          />
+  <div class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <!-- Background decorations -->
+    <div class="absolute inset-0">
+      <div class="absolute top-20 left-20 w-72 h-72 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+      <div class="absolute top-40 right-20 w-72 h-72 bg-yellow-500/30 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 2s;"></div>
+      <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-500/30 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 4s;"></div>
+    </div>
+
+    <div class="relative z-10 container mx-auto px-6 py-8">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 mb-6 tracking-tight">
+          🎁 Labubu Mystery Box
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+          Unlock exclusive Labubu NFTs through our innovative ZK-TLS powered mystery box experience
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
+          <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span>Zero-Knowledge Verification</span>
+          </div>
+          <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+            <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+            <span>Blockchain Secured</span>
+          </div>
+          <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+            <span class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></span>
+            <span>Limited Edition NFTs</span>
+          </div>
         </div>
       </div>
-      <!-- 开奖结果 -->
-      <div v-else-if="revealedPrize" class="flex justify-center">
-        <img
-            :src="revealedPrize.image"
-            :alt="revealedPrize.name"
-            class="object-contain rounded-2xl max-w-[16rem] sm:max-w-[20rem] lg:max-w-[24rem] h-auto transition-transform duration-700 animate-reveal"
-            @error="handleImageError"
-        />
-      </div>
-      <!-- 提示信息 -->
-      <div v-if="message" class="mt-6 sm:mt-8 text-base sm:text-lg font-semibold text-center text-gray-12 prose prose-sm sm:prose">
-        {{ message }}
+
+      <!-- Main Game Area -->
+      <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-3 gap-12 items-start">
+          
+          <!-- Left: How it Works -->
+          <div class="lg:order-1 space-y-6">
+            <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
+              <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
+                <span class="text-4xl mr-3">🎯</span>
+                How It Works
+              </h2>
+              <div class="space-y-4">
+                <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-pink-500/20 to-purple-500/20">
+                  <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">1</div>
+                  <div>
+                    <h3 class="text-white font-semibold mb-1">Choose Your Box</h3>
+                    <p class="text-gray-300 text-sm">Select from 6 mystery boxes, each containing a unique Labubu NFT</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-purple-500/20 to-blue-500/20">
+                  <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">2</div>
+                  <div>
+                    <h3 class="text-white font-semibold mb-1">Connect Wallet</h3>
+                    <p class="text-gray-300 text-sm">Link your MetaMask or OKX wallet to the Monad testnet</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-blue-500/20 to-green-500/20">
+                  <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">3</div>
+                  <div>
+                    <h3 class="text-white font-semibold mb-1">Verify Identity</h3>
+                    <p class="text-gray-300 text-sm">Complete ZK-TLS Twitter verification for security</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-green-500/20 to-yellow-500/20">
+                  <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">4</div>
+                  <div>
+                    <h3 class="text-white font-semibold mb-1">Claim Your NFT</h3>
+                    <p class="text-gray-300 text-sm">Mint your exclusive Labubu NFT to your wallet</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center: Mystery Boxes -->
+          <div class="lg:order-2 flex flex-col items-center space-y-8">
+            <!-- Mystery Box Grid -->
+            <div v-if="!isCycling && !revealedPrize" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
+              <h3 class="text-2xl font-bold text-white text-center mb-6">🎁 Choose Your Mystery Box</h3>
+              <div class="grid grid-cols-3 gap-4">
+                <button
+                  v-for="(box, index) in boxes"
+                  :key="index"
+                  class="relative w-24 h-24 group transition-all duration-300 hover:scale-110"
+                  :class="{
+                    'scale-110 z-10': selectedIndex === index,
+                  }"
+                  @click="selectBox(index)"
+                >
+                  <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl transform rotate-6 group-hover:rotate-12 transition-transform duration-300"></div>
+                  <div 
+                    class="relative w-full h-full bg-gradient-to-br from-white to-gray-100 rounded-2xl shadow-xl border-4 transition-all duration-300"
+                    :class="{
+                      'border-yellow-400 shadow-yellow-400/50': selectedIndex === index,
+                      'border-white group-hover:border-pink-300': selectedIndex !== index,
+                    }"
+                  >
+                    <img
+                      v-if="!box.isRevealed"
+                      :src="backImage"
+                      alt="Mystery Box"
+                      class="object-cover rounded-xl w-full h-full"
+                      @error="handleImageError"
+                    />
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <span class="text-2xl font-bold text-gray-600">{{ index + 1 }}</span>
+                    </div>
+                    <div v-if="selectedIndex === index" class="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-bounce">
+                      <span class="text-white text-xs font-bold">✓</span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Opening Animation -->
+            <div v-if="isCycling" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+              <div class="text-center">
+                <div class="relative w-40 h-40 mb-8">
+                  <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl animate-spin"></div>
+                  <div class="absolute inset-2 bg-white rounded-2xl flex items-center justify-center">
+                    <img
+                      :src="backImage"
+                      alt="Opening..."
+                      class="w-20 h-20 object-cover rounded-xl animate-pulse"
+                      @error="handleImageError"
+                    />
+                  </div>
+                </div>
+                <h3 class="text-3xl font-bold text-white mb-4">🎪 Opening Your Mystery Box...</h3>
+                <div class="flex justify-center space-x-2">
+                  <div class="w-3 h-3 bg-pink-500 rounded-full animate-bounce"></div>
+                  <div class="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                  <div class="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Revealed Prize -->
+            <div v-if="revealedPrize" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl text-center">
+              <h3 class="text-3xl font-bold text-white mb-6">🎉 Congratulations!</h3>
+              <div class="relative inline-block">
+                <div class="absolute -inset-4 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-3xl blur-lg opacity-75 animate-pulse"></div>
+                <img
+                  :src="revealedPrize.image"
+                  :alt="revealedPrize.name"
+                  class="relative w-48 h-48 object-cover rounded-3xl shadow-2xl"
+                  @error="handleImageError"
+                />
+              </div>
+              <h4 class="text-2xl font-bold text-yellow-400 mt-6 mb-2">{{ revealedPrize.name }}</h4>
+              <p class="text-gray-300">Your exclusive Labubu NFT awaits!</p>
+            </div>
+
+            <!-- Status Message -->
+            <div v-if="message" class="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm rounded-2xl p-4 border border-yellow-500/30">
+              <p class="text-yellow-200 font-medium text-center">{{ message }}</p>
+            </div>
+          </div>
+
+          <!-- Right: Action Panel -->
+          <div class="lg:order-3 space-y-6">
+            <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
+              <h2 class="text-3xl font-bold text-white text-center mb-8">
+                <span class="text-4xl block mb-2">🎮</span>
+                Game Control
+              </h2>
+
+              <!-- Game Controls -->
+              <div v-if="!isCycling && !revealedPrize" class="space-y-4">
+                <div class="text-center p-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl border border-purple-400/30">
+                  <p v-if="selectedIndex === null" class="text-purple-200 text-lg font-medium">
+                    ✨ Select a mystery box to begin your adventure
+                  </p>
+                  <p v-else class="text-purple-200 text-lg font-medium">
+                    🎯 Box #{{ selectedIndex + 1 }} selected - Ready to open!
+                  </p>
+                  <p v-if="isLoggedIn" class="mt-3 text-sm text-green-300 bg-green-500/20 px-3 py-1 rounded-full inline-block">
+                    🔗 Wallet Connected: {{ userAddress.slice(0, 6) }}...{{ userAddress.slice(-4) }}
+                  </p>
+                </div>
+                
+                <div class="flex gap-3">
+                  <button
+                    v-if="selectedIndex !== null"
+                    class="flex-1 px-6 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl font-bold text-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    @click="cancelSelection"
+                  >
+                    🔄 Reset
+                  </button>
+                  <button
+                    class="flex-1 px-6 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-2xl font-bold text-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    :disabled="selectedIndex === null"
+                    @click="startCycle"
+                  >
+                    🚀 Open Box
+                  </button>
+                </div>
+              </div>
+
+              <!-- Verification Steps -->
+              <div v-if="revealedPrize" class="space-y-4">
+                <!-- Wallet Connection -->
+                <div class="p-4 rounded-2xl border-2 transition-all duration-300" :class="{ 'bg-green-500/20 border-green-400': isLoggedIn, 'bg-gray-500/20 border-gray-400': !isLoggedIn }">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="{ 'bg-green-500': isLoggedIn, 'bg-gray-500': !isLoggedIn }">
+                        <span class="text-white text-sm">{{ isLoggedIn ? '✓' : '1' }}</span>
+                      </div>
+                      <span class="font-semibold" :class="{ 'text-green-300': isLoggedIn, 'text-gray-300': !isLoggedIn }">
+                        {{ isLoggedIn ? '✅ Wallet Connected' : '💼 Connect Wallet' }}
+                      </span>
+                    </div>
+                    <button
+                      v-if="!isLoggedIn"
+                      class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                      @click="loginWallet"
+                    >
+                      Connect
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Twitter Verification -->
+                <div class="p-4 rounded-2xl border-2 transition-all duration-300" :class="{ 'bg-green-500/20 border-green-400': isTwitterVerified, 'bg-gray-500/20 border-gray-400': !isTwitterVerified }">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="{ 'bg-green-500': isTwitterVerified, 'bg-gray-500': !isTwitterVerified }">
+                        <span class="text-white text-sm">{{ isTwitterVerified ? '✓' : '2' }}</span>
+                      </div>
+                      <span class="font-semibold" :class="{ 'text-green-300': isTwitterVerified, 'text-gray-300': !isTwitterVerified }">
+                        {{ isTwitterVerified ? `✅ Verified: @${twitterUsername}` : '🐦 Verify Twitter' }}
+                      </span>
+                    </div>
+                    <button
+                      v-if="!isTwitterVerified"
+                      class="px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-xl font-medium hover:from-blue-500 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      :disabled="!isLoggedIn || isVerifying"
+                      @click="verifyTwitter"
+                    >
+                      {{ isVerifying ? '⏳ Verifying...' : 'Verify' }}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- NFT Claim -->
+                <div class="p-4 rounded-2xl border-2 transition-all duration-300" :class="{ 'bg-green-500/20 border-green-400': isNFTClaimed, 'bg-gray-500/20 border-gray-400': !isNFTClaimed }">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 rounded-full flex items-center justify-center" :class="{ 'bg-green-500': isNFTClaimed, 'bg-gray-500': !isNFTClaimed }">
+                        <span class="text-white text-sm">{{ isNFTClaimed ? '✓' : '3' }}</span>
+                      </div>
+                      <span class="font-semibold" :class="{ 'text-green-300': isNFTClaimed, 'text-gray-300': !isNFTClaimed }">
+                        {{ isNFTClaimed ? '✅ NFT Claimed' : '🎁 Claim NFT' }}
+                      </span>
+                    </div>
+                    <button
+                      v-if="isLoggedIn && isTwitterVerified && !isNFTClaimed"
+                      class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-medium hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      :disabled="isClaiming"
+                      @click="claimNFT"
+                    >
+                      {{ isClaiming ? '⏳ Claiming...' : '🎁 Claim' }}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Play Again Button -->
+                <button
+                  v-if="isLoggedIn && isTwitterVerified && isNFTClaimed"
+                  class="w-full mt-6 px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl font-bold text-lg hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  @click="retryGame"
+                >
+                  🎮 Play Again
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 中间：空隙 -->
-    <div class="w-full"></div>
-
-    <!-- 右侧：盲盒机器界面 -->
-    <div class="w-[20rem] sm:w-[24rem] flex flex-col justify-center">
-      <div class="bg-white p-8 sm:p-10 rounded-2xl shadow-lg">
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 text-center text-gray-12 tracking-tight">Labubu 盲盒</h2>
-        <div class="text-center mb-10 bg-gray-1 py-8 rounded-lg">
-          <p v-if="selectedIndex === null && !revealedPrize && !isCycling" class="text-base sm:text-lg text-gray-7">请选择一个盲盒</p>
-          <p v-else-if="!isCycling && !revealedPrize" class="text-base sm:text-lg text-gray-7">已选择 #{{ selectedIndex + 1 }}，准备开启！</p>
-          <p v-else-if="isCycling" class="text-base sm:text-lg text-blue-9 font-semibold animate-pulse">盲盒开启中...</p>
-          <p v-else class="text-base sm:text-lg text-green-9 font-semibold">请完成验证以领取 Labubu NFT</p>
-          <p v-if="isLoggedIn" class="mt-4 text-sm sm:text-base text-gray-8 font-medium">
-            已连接钱包: {{ userAddress.slice(0, 6) }}...{{ userAddress.slice(-4) }}
-          </p>
-        </div>
-        <div v-if="!isCycling && !revealedPrize" class="flex justify-center gap-4 sm:gap-6">
-          <button
-              v-if="selectedIndex !== null"
-              class="px-6 sm:px-8 py-3 sm:py-4 bg-gray-3 rounded-lg text-base sm:text-lg font-medium text-gray-9 hover:bg-gray-4 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-6"
-              @click="cancelSelection"
-          >
-            取消
-          </button>
-          <button
-              class="px-6 sm:px-8 py-3 sm:py-4 bg-blue-9 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-10 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-9/50"
-              :disabled="selectedIndex === null"
-              @click="startCycle"
-          >
-            开始
-          </button>
-        </div>
-        <div v-else-if="revealedPrize" class="flex flex-col gap-6 sm:gap-8">
-          <div class="flex items-center justify-between">
-            <span class="text-base sm:text-lg font-medium" :class="{ 'text-green-9': isLoggedIn, 'text-gray-7': !isLoggedIn }">
-              {{ isLoggedIn ? `✔ 已连接钱包` : '1. 连接钱包' }}
-            </span>
-            <button
-                v-if="!isLoggedIn"
-                class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-9 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-10 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-9/50"
-                @click="loginWallet"
-            >
-              连接
-            </button>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="text-base sm:text-lg font-medium" :class="{ 'text-green-9': isTwitterVerified, 'text-gray-7': !isTwitterVerified }">
-              {{ isTwitterVerified ? `✔ 已验证Twitter: @${twitterUsername}` : '2. 验证Twitter' }}
-            </span>
-            <button
-                v-if="!isTwitterVerified"
-                class="px-4 sm:px-6 py-2 sm:py-3 bg-blue-8 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-blue-9 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-8/50"
-                :disabled="!isLoggedIn || isVerifying"
-                @click="verifyTwitter"
-            >
-              {{ isVerifying ? '验证中...' : '验证' }}
-            </button>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="text-base sm:text-lg font-medium" :class="{ 'text-green-9': isNFTClaimed, 'text-gray-7': !isNFTClaimed }">
-              {{ isNFTClaimed ? `✔ 已领取 Labubu NFT` : '3. 领取你的 Labubu NFT' }}
-            </span>
-            <button
-                v-if="isLoggedIn && isTwitterVerified && !isNFTClaimed"
-                class="px-4 sm:px-6 py-2 sm:py-3 bg-green-9 text-white rounded-lg text-base sm:text-lg font-medium hover:bg-green-10 transition-colors focus:outline-none focus:ring-2 focus:ring-green-9/50"
-                :disabled="isClaiming"
-                @click="claimNFT"
-            >
-              {{ isClaiming ? '领取中...' : '领取' }}
-            </button>
-          </div>
-          <button
-              v-if="isLoggedIn && isTwitterVerified && isNFTClaimed"
-              class="px-6 sm:px-8 py-3 sm:py-4 bg-green-9 text-white rounded-lg text-base sm:text-lg font-medium mt-8 hover:bg-green-10 transition-colors focus:outline-none focus:ring-2 focus:ring-green-9/50"
-              @click="retryGame"
-          >
-            再次尝试
-          </button>
-        </div>
-      </div>
-    </div>
+    <!-- Toast Component -->
+    <Toast :message="toastMessage" :type="toastType" :visible="toastVisible" @close="toastVisible = false" />
   </div>
-  <!-- Toast 组件 -->
-  <Toast :message="toastMessage" :type="toastType" :visible="toastVisible" @close="toastVisible = false" />
 </template>
 
 <script setup>
@@ -153,7 +298,7 @@ import { claimLabubuNFT } from './claim';
 import { waitForWallet } from '../utils/walletDetection';
 import Toast from './Toast.vue';
 
-// 动态加载图片，并映射 Labubu 到 nftId（0-5）
+// Dynamic image loading
 const images = import.meta.glob('/src/assets/*.png', { eager: true });
 const backImage = images['/src/assets/box2.png']?.default || 'https://via.placeholder.com/80?text=盲盒';
 const prizes = [
@@ -165,10 +310,7 @@ const prizes = [
   { name: 'Labubu 6', image: images['/src/assets/labubu6.png']?.default || 'https://via.placeholder.com/500?text=Labubu6', nftId: 5 },
 ];
 
-// 调试图片加载
-console.log('已加载图片:', Object.keys(images));
-
-// 状态定义
+// State definitions
 const boxes = ref(
     Array(6)
         .fill()
@@ -191,11 +333,11 @@ const userAddress = ref('');
 const twitterUsername = ref('');
 const attestationData = ref(null);
 const toastMessage = ref('');
-const toastType = ref('info'); // info, success, error
+const toastType = ref('info');
 const toastVisible = ref(false);
-const selectedNftId = ref(null); // 存储选中的 nftId
+const selectedNftId = ref(null);
 
-// 显示 Toast
+// Show Toast
 const showToast = (msg, type = 'info') => {
   toastMessage.value = msg;
   toastType.value = type;
@@ -205,35 +347,35 @@ const showToast = (msg, type = 'info') => {
   }, 3000);
 };
 
-// Primus ZK-TLS 配置
+// Primus ZK-TLS configuration
 const appId = "0x88249fdc1a77090ea963b2bef93a13b43a96c21e";
 const appSecret = "0x120ef8be875f5be7e0a1be618df1ec96e2eb89eaeb39f3cd3a4b7f4c931f5351";
 const primusZKTLS = new PrimusZKTLS();
 
-// 初始化 Primus ZK-TLS
+// Initialize Primus ZK-TLS
 const initPrimus = async () => {
   try {
     if (!appId || !appSecret) {
       throw new Error("appId or appSecret is not set.");
     }
     const initAttestationResult = await primusZKTLS.init(appId, appSecret);
-    console.log('Primus 初始化成功:', initAttestationResult);
+    console.log('Primus initialized successfully:', initAttestationResult);
   } catch (error) {
-    console.error('Primus 初始化失败:', error);
-    showToast('ZK-TLS 初始化失败，请重试', 'error');
+    console.error('Primus initialization failed:', error);
+    showToast('ZK-TLS initialization failed, please retry', 'error');
   }
 };
 initPrimus();
 
-// 选择盲盒
+// Select mystery box
 const selectBox = (index) => {
   if (!boxes.value[index].isRevealed && !isCycling.value && !revealedPrize.value) {
-    console.log('选择盲盒:', index);
+    console.log('Selected mystery box:', index);
     selectedIndex.value = index;
   }
 };
 
-// 开始动画
+// Start opening animation
 const startCycle = () => {
   if (selectedIndex.value === null) return;
   isCycling.value = true;
@@ -245,7 +387,7 @@ const startCycle = () => {
   }, 2500);
 };
 
-// 揭示盲盒结果
+// Reveal mystery box result
 const revealBox = () => {
   if (selectedIndex.value === null) return;
   const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
@@ -256,18 +398,18 @@ const revealBox = () => {
     prize: randomPrize.name,
   };
   revealedPrize.value = randomPrize;
-  selectedNftId.value = randomPrize.nftId; // 存储选中的 nftId
-  message.value = `恭喜！抽到 ${randomPrize.name}！`;
+  selectedNftId.value = randomPrize.nftId;
+  message.value = `Congratulations! You got ${randomPrize.name}!`;
   selectedIndex.value = null;
 };
 
-// 取消选择
+// Cancel selection
 const cancelSelection = () => {
   selectedIndex.value = null;
   message.value = '';
 };
 
-// 重试游戏
+// Retry game
 const retryGame = () => {
   revealedPrize.value = null;
   selectedIndex.value = null;
@@ -278,8 +420,8 @@ const retryGame = () => {
   userAddress.value = '';
   twitterUsername.value = '';
   attestationData.value = null;
-  selectedNftId.value = null; // 重置 nftId
-  boxes.value = Array(9)
+  selectedNftId.value = null;
+  boxes.value = Array(6)
       .fill()
       .map(() => ({
         isRevealed: false,
@@ -288,25 +430,25 @@ const retryGame = () => {
       }));
 };
 
-// 连接 MetaMask 或 OKX 钱包并切换到 Monad 测试网
+// Connect MetaMask or OKX wallet and switch to Monad testnet
 const loginWallet = async () => {
   try {
     if (!window.ethereum) {
-      showToast('请安装 MetaMask 或 OKX 钱包！', 'error');
-      console.error('未检测到 MetaMask 或 OKX');
+      showToast('Please install MetaMask or OKX wallet!', 'error');
+      console.error('MetaMask or OKX not detected');
       return;
     }
 
     const walletDetection = await waitForWallet(5000);
     if (!walletDetection.isAvailable || !['MetaMask', 'OKX'].includes(walletDetection.walletType)) {
-      showToast('请使用 MetaMask 或 OKX 钱包！', 'error');
-      console.error('不支持的钱包:', walletDetection.walletType);
+      showToast('Please use MetaMask or OKX wallet!', 'error');
+      console.error('Unsupported wallet:', walletDetection.walletType);
       return;
     }
 
     const switched = await switchToMonadTestnet();
     if (!switched) {
-      showToast('无法切换到 Monad 测试网，请手动切换网络', 'error');
+      showToast('Unable to switch to Monad testnet, please switch network manually', 'error');
       return;
     }
 
@@ -316,25 +458,25 @@ const loginWallet = async () => {
     if (accounts.length > 0) {
       userAddress.value = accounts[0];
       isLoggedIn.value = true;
-      showToast(`钱包已连接：${userAddress.value.slice(0, 6)}...${userAddress.value.slice(-4)}`, 'success');
+      showToast(`Wallet connected: ${userAddress.value.slice(0, 6)}...${userAddress.value.slice(-4)}`, 'success');
     } else {
-      showToast('无法连接钱包，请重试！', 'error');
+      showToast('Unable to connect wallet, please retry!', 'error');
     }
   } catch (error) {
-    showToast('钱包连接失败，请检查 MetaMask 或 OKX 设置！', 'error');
-    console.error('钱包连接错误:', error);
+    showToast('Wallet connection failed, please check MetaMask or OKX settings!', 'error');
+    console.error('Wallet connection error:', error);
   }
 };
 
-// Twitter 验证
+// Twitter verification
 const verifyTwitter = async () => {
   if (!isLoggedIn.value || !userAddress.value) {
-    showToast('请先连接钱包！', 'error');
+    showToast('Please connect wallet first!', 'error');
     return;
   }
 
   isVerifying.value = true;
-  showToast('正在进行 Twitter 验证...', 'info');
+  showToast('Performing Twitter verification...', 'info');
 
   try {
     const attTemplateID = "2e3160ae-8b1e-45e3-8c59-426366278b9d";
@@ -370,43 +512,43 @@ const verifyTwitter = async () => {
       attestationData.value = attestation;
       const attestationParsed = JSON.parse(attestation.extendedData || '{}');
       twitterUsername.value = attestationParsed.screen_name || 'Unknown';
-      showToast(`✅ Twitter 验证成功！用户名: @${twitterUsername.value}`, 'success');
+      showToast(`✅ Twitter verification successful! Username: @${twitterUsername.value}`, 'success');
     } else {
-      showToast('❌ Twitter 验证失败，请重试', 'error');
+      showToast('❌ Twitter verification failed, please retry', 'error');
     }
   } catch (error) {
-    showToast(`验证失败：${error.message || '请重试'}`, 'error');
-    console.error('Twitter 验证错误:', error);
+    showToast(`Verification failed: ${error.message || 'Please retry'}`, 'error');
+    console.error('Twitter verification error:', error);
   } finally {
     isVerifying.value = false;
   }
 };
 
-// 领取 Labubu NFT
+// Claim Labubu NFT
 const claimNFT = async () => {
   if (!isLoggedIn.value || !isTwitterVerified.value || !userAddress.value || !attestationData.value || selectedNftId.value === null) {
-    showToast('请先完成钱包连接、Twitter 验证并选择一个盲盒！', 'error');
+    showToast('Please complete wallet connection, Twitter verification and select a mystery box!', 'error');
     return;
   }
 
   isClaiming.value = true;
-  showToast('正在检测钱包环境...', 'info');
+  showToast('Detecting wallet environment...', 'info');
 
   try {
     const walletDetection = await waitForWallet(5000);
     if (!walletDetection.isAvailable || !['MetaMask', 'OKX'].includes(walletDetection.walletType)) {
-      showToast('请使用 MetaMask 或 OKX 钱包！', 'error');
-      console.error('不支持的钱包:', walletDetection.walletType);
+      showToast('Please use MetaMask or OKX wallet!', 'error');
+      console.error('Unsupported wallet:', walletDetection.walletType);
       return;
     }
 
     const switched = await switchToMonadTestnet();
     if (!switched) {
-      showToast('无法切换到 Monad 测试网，请手动切换网络', 'error');
+      showToast('Unable to switch to Monad testnet, please switch network manually', 'error');
       return;
     }
 
-    showToast('正在领取 Labubu NFT...', 'info');
+    showToast('Claiming Labubu NFT...', 'info');
 
     const claimResult = await claimLabubuNFT(
         attestationData.value,
@@ -414,11 +556,11 @@ const claimNFT = async () => {
         userAddress.value,
         (txHash) => {
           isNFTClaimed.value = true;
-          showToast(`🎉 Labubu NFT 领取成功！交易哈希: ${txHash}`, 'success');
+          showToast(`🎉 Labubu NFT claimed successfully! Transaction hash: ${txHash}`, 'success');
         },
         (error) => {
           showToast(error.message, 'error');
-          console.error('NFT 领取失败:', error);
+          console.error('NFT claim failed:', error);
         }
     );
 
@@ -426,52 +568,37 @@ const claimNFT = async () => {
       showToast(claimResult.error, 'error');
     }
   } catch (error) {
-    showToast(`NFT 领取失败：${error.message || '请重试'}`, 'error');
-    console.error('NFT 领取错误:', error);
+    showToast(`NFT claim failed: ${error.message || 'Please retry'}`, 'error');
+    console.error('NFT claim error:', error);
   } finally {
     isClaiming.value = false;
   }
 };
 
-// 处理图片加载错误
+// Handle image loading error
 const handleImageError = (event) => {
-  console.error('图片加载错误:', event.target.src);
-  event.target.src = 'https://via.placeholder.com/500?text=错误';
+  console.error('Image loading error:', event.target.src);
+  event.target.src = 'https://via.placeholder.com/500?text=Error';
 };
 </script>
 
 <style scoped>
-@keyframes cycle {
-  0% {
-    transform: scale(1) rotate(0deg);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Custom animations and effects */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
   }
   50% {
-    transform: scale(1.2) rotate(8deg);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
   }
 }
 
-@keyframes reveal {
-  0% {
-    opacity: 0;
-    transform: scale(0.7) translate-y-8;
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translate-y-0;
-  }
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
 
-.animate-cycle {
-  animation: cycle 0.6s ease-in-out infinite;
-}
-
-.animate-reveal {
-  animation: reveal 0.8s ease-out forwards;
+/* Smooth transitions */
+* {
+  transition: all 0.3s ease;
 }
 </style>

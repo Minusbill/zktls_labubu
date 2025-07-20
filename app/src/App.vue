@@ -1,13 +1,20 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex items-center justify-center">
-    <BlindBox />
-  </div>
+  <BlindBoxGrid />
 </template>
 
 <script>
-import BlindBox from './components/BlindBoxGrid.vue';
+import BlindBoxGrid from './components/BlindBoxGrid.vue';
 
 export default {
-  components: { BlindBox },
+  components: { BlindBoxGrid },
 };
 </script>
+
+<style>
+/* Remove any global styles that might interfere */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+</style>
