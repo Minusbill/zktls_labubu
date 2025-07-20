@@ -153,16 +153,16 @@ import { claimLabubuNFT } from './claim';
 import { waitForWallet } from '../utils/walletDetection';
 import Toast from './Toast.vue';
 
-// 动态加载图片
+// 动态加载图片，并映射 Labubu 到 nftId（0-5）
 const images = import.meta.glob('/src/assets/*.png', { eager: true });
 const backImage = images['/src/assets/box2.png']?.default || 'https://via.placeholder.com/80?text=盲盒';
 const prizes = [
-  { name: 'Labubu 1', image: images['/src/assets/labubu1.png']?.default || 'https://via.placeholder.com/500?text=Labubu1' },
-  { name: 'Labubu 2', image: images['/src/assets/labubu2.png']?.default || 'https://via.placeholder.com/500?text=Labubu2' },
-  { name: 'Labubu 3', image: images['/src/assets/labubu3.png']?.default || 'https://via.placeholder.com/500?text=Labubu3' },
-  { name: 'Labubu 4', image: images['/src/assets/labubu4.png']?.default || 'https://via.placeholder.com/500?text=Labubu4' },
-  { name: 'Labubu 5', image: images['/src/assets/labubu5.png']?.default || 'https://via.placeholder.com/500?text=Labubu5' },
-  { name: 'Labubu 6', image: images['/src/assets/labubu6.png']?.default || 'https://via.placeholder.com/500?text=Labubu6' },
+  { name: 'Labubu 1', image: images['/src/assets/labubu1.png']?.default || 'https://via.placeholder.com/500?text=Labubu1', nftId: 0 },
+  { name: 'Labubu 2', image: images['/src/assets/labubu2.png']?.default || 'https://via.placeholder.com/500?text=Labubu2', nftId: 1 },
+  { name: 'Labubu 3', image: images['/src/assets/labubu3.png']?.default || 'https://via.placeholder.com/500?text=Labubu3', nftId: 2 },
+  { name: 'Labubu 4', image: images['/src/assets/labubu4.png']?.default || 'https://via.placeholder.com/500?text=Labubu4', nftId: 3 },
+  { name: 'Labubu 5', image: images['/src/assets/labubu5.png']?.default || 'https://via.placeholder.com/500?text=Labubu5', nftId: 4 },
+  { name: 'Labubu 6', image: images['/src/assets/labubu6.png']?.default || 'https://via.placeholder.com/500?text=Labubu6', nftId: 5 },
 ];
 
 // 调试图片加载
@@ -193,6 +193,7 @@ const attestationData = ref(null);
 const toastMessage = ref('');
 const toastType = ref('info'); // info, success, error
 const toastVisible = ref(false);
+const selectedNftId = ref(null); // 存储选中的 nftId
 
 // 显示 Toast
 const showToast = (msg, type = 'info') => {
@@ -205,8 +206,8 @@ const showToast = (msg, type = 'info') => {
 };
 
 // Primus ZK-TLS 配置
-const appId = "0x4bf0468034fd3e9cc4678915f25b253351c5a3ef";
-const appSecret = "0xe37b6e481d80c537838f7b16e7fe70bd9d48a7326f32c0eaabdd1c82074c819a";
+const appId = "0x88249fdc1a77090ea963b2bef93a13b43a96c21e";
+const appSecret = "0x120ef8be875f5be7e0a1be618df1ec96e2eb89eaeb39f3cd3a4b7f4c931f5351";
 const primusZKTLS = new PrimusZKTLS();
 
 // 初始化 Primus ZK-TLS
@@ -255,6 +256,7 @@ const revealBox = () => {
     prize: randomPrize.name,
   };
   revealedPrize.value = randomPrize;
+  selectedNftId.value = randomPrize.nftId; // 存储选中的 nftId
   message.value = `恭喜！抽到 ${randomPrize.name}！`;
   selectedIndex.value = null;
 };
@@ -276,6 +278,7 @@ const retryGame = () => {
   userAddress.value = '';
   twitterUsername.value = '';
   attestationData.value = null;
+  selectedNftId.value = null; // 重置 nftId
   boxes.value = Array(9)
       .fill()
       .map(() => ({
@@ -381,8 +384,8 @@ const verifyTwitter = async () => {
 
 // 领取 Labubu NFT
 const claimNFT = async () => {
-  if (!isLoggedIn.value || !isTwitterVerified.value || !userAddress.value || !attestationData.value) {
-    showToast('请先完成钱包连接和 Twitter 验证！', 'error');
+  if (!isLoggedIn.value || !isTwitterVerified.value || !userAddress.value || !attestationData.value || selectedNftId.value === null) {
+    showToast('请先完成钱包连接、Twitter 验证并选择一个盲盒！', 'error');
     return;
   }
 
@@ -405,10 +408,9 @@ const claimNFT = async () => {
 
     showToast('正在领取 Labubu NFT...', 'info');
 
-    const nftId = 1; // 默认 NFT ID，可根据需求调整
     const claimResult = await claimLabubuNFT(
         attestationData.value,
-        nftId,
+        selectedNftId.value,
         userAddress.value,
         (txHash) => {
           isNFTClaimed.value = true;
