@@ -170,7 +170,7 @@ console.log('已加载图片:', Object.keys(images));
 
 // 状态定义
 const boxes = ref(
-    Array(9)
+    Array(6)
         .fill()
         .map(() => ({
           isRevealed: false,
