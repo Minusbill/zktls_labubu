@@ -11,23 +11,23 @@
       <!-- Hero Section -->
       <div class="text-center mb-16">
         <h1 class="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 mb-6 tracking-tight">
-          🎁 Labubu Mystery Box
+          🎁 Labubu 神秘盲盒
         </h1>
         <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-          Unlock exclusive Labubu NFTs through our innovative ZK-TLS powered mystery box experience
+          通过我们创新的 ZK-TLS 技术驱动的神秘盲盒体验，解锁专属 Labubu NFT
         </p>
         <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
           <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
             <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            <span>Zero-Knowledge Verification</span>
+            <span>零知识验证</span>
           </div>
           <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
             <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-            <span>Blockchain Secured</span>
+            <span>区块链安全保障</span>
           </div>
           <div class="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
             <span class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></span>
-            <span>Limited Edition NFTs</span>
+            <span>限量版 NFT</span>
           </div>
         </div>
       </div>
@@ -41,35 +41,35 @@
             <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
               <h2 class="text-3xl font-bold text-white mb-6 flex items-center">
                 <span class="text-4xl mr-3">🎯</span>
-                How It Works
+                游戏玩法
               </h2>
               <div class="space-y-4">
                 <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-pink-500/20 to-purple-500/20">
                   <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">1</div>
                   <div>
-                    <h3 class="text-white font-semibold mb-1">Choose Your Box</h3>
-                    <p class="text-gray-300 text-sm">Select from 6 mystery boxes, each containing a unique Labubu NFT</p>
+                    <h3 class="text-white font-semibold mb-1">选择盲盒</h3>
+                    <p class="text-gray-300 text-sm">从6个神秘盲盒中选择，每个都包含独特的 Labubu NFT</p>
                   </div>
                 </div>
                 <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-purple-500/20 to-blue-500/20">
                   <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">2</div>
                   <div>
-                    <h3 class="text-white font-semibold mb-1">Connect Wallet</h3>
-                    <p class="text-gray-300 text-sm">Link your MetaMask or OKX wallet to the Monad testnet</p>
+                    <h3 class="text-white font-semibold mb-1">连接钱包</h3>
+                    <p class="text-gray-300 text-sm">将您的 MetaMask 或 OKX 钱包连接到 Monad 测试网</p>
                   </div>
                 </div>
                 <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-blue-500/20 to-green-500/20">
                   <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">3</div>
                   <div>
-                    <h3 class="text-white font-semibold mb-1">Verify Identity</h3>
-                    <p class="text-gray-300 text-sm">Complete ZK-TLS Twitter verification for security</p>
+                    <h3 class="text-white font-semibold mb-1">身份验证</h3>
+                    <p class="text-gray-300 text-sm">完成 ZK-TLS Twitter 验证以确保安全</p>
                   </div>
                 </div>
                 <div class="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-green-500/20 to-yellow-500/20">
                   <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">4</div>
                   <div>
-                    <h3 class="text-white font-semibold mb-1">Claim Your NFT</h3>
-                    <p class="text-gray-300 text-sm">Mint your exclusive Labubu NFT to your wallet</p>
+                    <h3 class="text-white font-semibold mb-1">领取 NFT</h3>
+                    <p class="text-gray-300 text-sm">将您的专属 Labubu NFT 铸造到钱包中</p>
                   </div>
                 </div>
               </div>
@@ -80,7 +80,7 @@
           <div class="lg:order-2 flex flex-col items-center space-y-8">
             <!-- Mystery Box Grid -->
             <div v-if="!isCycling && !revealedPrize" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
-              <h3 class="text-2xl font-bold text-white text-center mb-6">🎁 Choose Your Mystery Box</h3>
+              <h3 class="text-2xl font-bold text-white text-center mb-6">🎁 选择您的神秘盲盒</h3>
               <div class="grid grid-cols-3 gap-4">
                 <button
                   v-for="(box, index) in boxes"
@@ -102,7 +102,7 @@
                     <img
                       v-if="!box.isRevealed"
                       :src="backImage"
-                      alt="Mystery Box"
+                      alt="神秘盒子"
                       class="object-cover rounded-xl w-full h-full"
                       @error="handleImageError"
                     />
@@ -125,13 +125,13 @@
                   <div class="absolute inset-2 bg-white rounded-2xl flex items-center justify-center">
                     <img
                       :src="backImage"
-                      alt="Opening..."
+                      alt="开启中..."
                       class="w-20 h-20 object-cover rounded-xl animate-pulse"
                       @error="handleImageError"
                     />
                   </div>
                 </div>
-                <h3 class="text-3xl font-bold text-white mb-4">🎪 Opening Your Mystery Box...</h3>
+                <h3 class="text-3xl font-bold text-white mb-4">🎪 正在开启您的神秘盲盒...</h3>
                 <div class="flex justify-center space-x-2">
                   <div class="w-3 h-3 bg-pink-500 rounded-full animate-bounce"></div>
                   <div class="w-3 h-3 bg-purple-500 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
@@ -142,7 +142,7 @@
 
             <!-- Revealed Prize -->
             <div v-if="revealedPrize" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl text-center">
-              <h3 class="text-3xl font-bold text-white mb-6">🎉 Congratulations!</h3>
+              <h3 class="text-3xl font-bold text-white mb-6">🎉 恭喜您！</h3>
               <div class="relative inline-block">
                 <div class="absolute -inset-4 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-3xl blur-lg opacity-75 animate-pulse"></div>
                 <img
@@ -153,7 +153,7 @@
                 />
               </div>
               <h4 class="text-2xl font-bold text-yellow-400 mt-6 mb-2">{{ revealedPrize.name }}</h4>
-              <p class="text-gray-300">Your exclusive Labubu NFT awaits!</p>
+              <p class="text-gray-300">您的专属 Labubu NFT 等待领取！</p>
             </div>
 
             <!-- Status Message -->
@@ -167,20 +167,20 @@
             <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
               <h2 class="text-3xl font-bold text-white text-center mb-8">
                 <span class="text-4xl block mb-2">🎮</span>
-                Game Control
+                游戏控制
               </h2>
 
               <!-- Game Controls -->
               <div v-if="!isCycling && !revealedPrize" class="space-y-4">
                 <div class="text-center p-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl border border-purple-400/30">
                   <p v-if="selectedIndex === null" class="text-purple-200 text-lg font-medium">
-                    ✨ Select a mystery box to begin your adventure
+                    ✨ 选择一个神秘盲盒开始您的冒险
                   </p>
                   <p v-else class="text-purple-200 text-lg font-medium">
-                    🎯 Box #{{ selectedIndex + 1 }} selected - Ready to open!
+                    🎯 已选择 #{{ selectedIndex + 1 }} 号盒子 - 准备开启！
                   </p>
                   <p v-if="isLoggedIn" class="mt-3 text-sm text-green-300 bg-green-500/20 px-3 py-1 rounded-full inline-block">
-                    🔗 Wallet Connected: {{ userAddress.slice(0, 6) }}...{{ userAddress.slice(-4) }}
+                    🔗 钱包已连接: {{ userAddress.slice(0, 6) }}...{{ userAddress.slice(-4) }}
                   </p>
                 </div>
                 
@@ -190,14 +190,14 @@
                     class="flex-1 px-6 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl font-bold text-lg hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg"
                     @click="cancelSelection"
                   >
-                    🔄 Reset
+                    🔄 重置
                   </button>
                   <button
                     class="flex-1 px-6 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-2xl font-bold text-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                     :disabled="selectedIndex === null"
                     @click="startCycle"
                   >
-                    🚀 Open Box
+                    🚀 开启盲盒
                   </button>
                 </div>
               </div>
@@ -212,7 +212,7 @@
                         <span class="text-white text-sm">{{ isLoggedIn ? '✓' : '1' }}</span>
                       </div>
                       <span class="font-semibold" :class="{ 'text-green-300': isLoggedIn, 'text-gray-300': !isLoggedIn }">
-                        {{ isLoggedIn ? '✅ Wallet Connected' : '💼 Connect Wallet' }}
+                        {{ isLoggedIn ? '✅ 钱包已连接' : '💼 连接钱包' }}
                       </span>
                     </div>
                     <button
@@ -220,7 +220,7 @@
                       class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
                       @click="loginWallet"
                     >
-                      Connect
+                      连接
                     </button>
                   </div>
                 </div>
@@ -233,7 +233,7 @@
                         <span class="text-white text-sm">{{ isTwitterVerified ? '✓' : '2' }}</span>
                       </div>
                       <span class="font-semibold" :class="{ 'text-green-300': isTwitterVerified, 'text-gray-300': !isTwitterVerified }">
-                        {{ isTwitterVerified ? `✅ Verified: @${twitterUsername}` : '🐦 Verify Twitter' }}
+                        {{ isTwitterVerified ? `✅ 已验证: @${twitterUsername}` : '🐦 验证 Twitter' }}
                       </span>
                     </div>
                     <button
@@ -242,7 +242,7 @@
                       :disabled="!isLoggedIn || isVerifying"
                       @click="verifyTwitter"
                     >
-                      {{ isVerifying ? '⏳ Verifying...' : 'Verify' }}
+                      {{ isVerifying ? '⏳ 验证中...' : '验证' }}
                     </button>
                   </div>
                 </div>
@@ -255,7 +255,7 @@
                         <span class="text-white text-sm">{{ isNFTClaimed ? '✓' : '3' }}</span>
                       </div>
                       <span class="font-semibold" :class="{ 'text-green-300': isNFTClaimed, 'text-gray-300': !isNFTClaimed }">
-                        {{ isNFTClaimed ? '✅ NFT Claimed' : '🎁 Claim NFT' }}
+                        {{ isNFTClaimed ? '✅ NFT 已领取' : '🎁 领取 NFT' }}
                       </span>
                     </div>
                     <button
@@ -264,7 +264,7 @@
                       :disabled="isClaiming"
                       @click="claimNFT"
                     >
-                      {{ isClaiming ? '⏳ Claiming...' : '🎁 Claim' }}
+                      {{ isClaiming ? '⏳ 领取中...' : '🎁 领取' }}
                     </button>
                   </div>
                 </div>
@@ -275,7 +275,7 @@
                   class="w-full mt-6 px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl font-bold text-lg hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
                   @click="retryGame"
                 >
-                  🎮 Play Again
+                  🎮 再次游戏
                 </button>
               </div>
             </div>
@@ -356,13 +356,13 @@ const primusZKTLS = new PrimusZKTLS();
 const initPrimus = async () => {
   try {
     if (!appId || !appSecret) {
-      throw new Error("appId or appSecret is not set.");
+      throw new Error("应用ID或应用密钥未设置");
     }
     const initAttestationResult = await primusZKTLS.init(appId, appSecret);
     console.log('Primus initialized successfully:', initAttestationResult);
   } catch (error) {
     console.error('Primus initialization failed:', error);
-    showToast('ZK-TLS initialization failed, please retry', 'error');
+    showToast('ZK-TLS 初始化失败，请重试', 'error');
   }
 };
 initPrimus();
@@ -399,7 +399,7 @@ const revealBox = () => {
   };
   revealedPrize.value = randomPrize;
   selectedNftId.value = randomPrize.nftId;
-  message.value = `Congratulations! You got ${randomPrize.name}!`;
+  message.value = `恭喜！您获得了 ${randomPrize.name}！`;
   selectedIndex.value = null;
 };
 
@@ -434,21 +434,21 @@ const retryGame = () => {
 const loginWallet = async () => {
   try {
     if (!window.ethereum) {
-      showToast('Please install MetaMask or OKX wallet!', 'error');
+      showToast('请安装 MetaMask 或 OKX 钱包！', 'error');
       console.error('MetaMask or OKX not detected');
       return;
     }
 
     const walletDetection = await waitForWallet(5000);
     if (!walletDetection.isAvailable || !['MetaMask', 'OKX'].includes(walletDetection.walletType)) {
-      showToast('Please use MetaMask or OKX wallet!', 'error');
+      showToast('请使用 MetaMask 或 OKX 钱包！', 'error');
       console.error('Unsupported wallet:', walletDetection.walletType);
       return;
     }
 
     const switched = await switchToMonadTestnet();
     if (!switched) {
-      showToast('Unable to switch to Monad testnet, please switch network manually', 'error');
+      showToast('无法切换到 Monad 测试网，请手动切换网络', 'error');
       return;
     }
 
@@ -458,12 +458,12 @@ const loginWallet = async () => {
     if (accounts.length > 0) {
       userAddress.value = accounts[0];
       isLoggedIn.value = true;
-      showToast(`Wallet connected: ${userAddress.value.slice(0, 6)}...${userAddress.value.slice(-4)}`, 'success');
+      showToast(`钱包已连接：${userAddress.value.slice(0, 6)}...${userAddress.value.slice(-4)}`, 'success');
     } else {
-      showToast('Unable to connect wallet, please retry!', 'error');
+      showToast('无法连接钱包，请重试！', 'error');
     }
   } catch (error) {
-    showToast('Wallet connection failed, please check MetaMask or OKX settings!', 'error');
+    showToast('钱包连接失败，请检查 MetaMask 或 OKX 设置！', 'error');
     console.error('Wallet connection error:', error);
   }
 };
@@ -471,12 +471,12 @@ const loginWallet = async () => {
 // Twitter verification
 const verifyTwitter = async () => {
   if (!isLoggedIn.value || !userAddress.value) {
-    showToast('Please connect wallet first!', 'error');
+    showToast('请先连接钱包！', 'error');
     return;
   }
 
   isVerifying.value = true;
-  showToast('Performing Twitter verification...', 'info');
+  showToast('正在进行 Twitter 验证...', 'info');
 
   try {
     const attTemplateID = "2e3160ae-8b1e-45e3-8c59-426366278b9d";
@@ -512,12 +512,12 @@ const verifyTwitter = async () => {
       attestationData.value = attestation;
       const attestationParsed = JSON.parse(attestation.extendedData || '{}');
       twitterUsername.value = attestationParsed.screen_name || 'Unknown';
-      showToast(`✅ Twitter verification successful! Username: @${twitterUsername.value}`, 'success');
+      showToast(`✅ Twitter 验证成功！用户名：@${twitterUsername.value}`, 'success');
     } else {
-      showToast('❌ Twitter verification failed, please retry', 'error');
+      showToast('❌ Twitter 验证失败，请重试', 'error');
     }
   } catch (error) {
-    showToast(`Verification failed: ${error.message || 'Please retry'}`, 'error');
+    showToast(`验证失败：${error.message || '请重试'}`, 'error');
     console.error('Twitter verification error:', error);
   } finally {
     isVerifying.value = false;
@@ -527,28 +527,28 @@ const verifyTwitter = async () => {
 // Claim Labubu NFT
 const claimNFT = async () => {
   if (!isLoggedIn.value || !isTwitterVerified.value || !userAddress.value || !attestationData.value || selectedNftId.value === null) {
-    showToast('Please complete wallet connection, Twitter verification and select a mystery box!', 'error');
+    showToast('请完成钱包连接、Twitter 验证并选择一个神秘盒子！', 'error');
     return;
   }
 
   isClaiming.value = true;
-  showToast('Detecting wallet environment...', 'info');
+  showToast('正在检测钱包环境...', 'info');
 
   try {
     const walletDetection = await waitForWallet(5000);
     if (!walletDetection.isAvailable || !['MetaMask', 'OKX'].includes(walletDetection.walletType)) {
-      showToast('Please use MetaMask or OKX wallet!', 'error');
+      showToast('请使用 MetaMask 或 OKX 钱包！', 'error');
       console.error('Unsupported wallet:', walletDetection.walletType);
       return;
     }
 
     const switched = await switchToMonadTestnet();
     if (!switched) {
-      showToast('Unable to switch to Monad testnet, please switch network manually', 'error');
+      showToast('无法切换到 Monad 测试网，请手动切换网络', 'error');
       return;
     }
 
-    showToast('Claiming Labubu NFT...', 'info');
+    showToast('正在领取 Labubu NFT...', 'info');
 
     const claimResult = await claimLabubuNFT(
         attestationData.value,
@@ -556,7 +556,7 @@ const claimNFT = async () => {
         userAddress.value,
         (txHash) => {
           isNFTClaimed.value = true;
-          showToast(`🎉 Labubu NFT claimed successfully! Transaction hash: ${txHash}`, 'success');
+          showToast(`🎉 Labubu NFT 领取成功！交易哈希：${txHash}`, 'success');
         },
         (error) => {
           showToast(error.message, 'error');
@@ -568,7 +568,7 @@ const claimNFT = async () => {
       showToast(claimResult.error, 'error');
     }
   } catch (error) {
-    showToast(`NFT claim failed: ${error.message || 'Please retry'}`, 'error');
+    showToast(`NFT 领取失败：${error.message || '请重试'}`, 'error');
     console.error('NFT claim error:', error);
   } finally {
     isClaiming.value = false;
@@ -578,7 +578,7 @@ const claimNFT = async () => {
 // Handle image loading error
 const handleImageError = (event) => {
   console.error('Image loading error:', event.target.src);
-  event.target.src = 'https://via.placeholder.com/500?text=Error';
+  event.target.src = 'https://via.placeholder.com/500?text=错误';
 };
 </script>
 

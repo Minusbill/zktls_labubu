@@ -168,7 +168,7 @@ const handleClick = () => {
 
 const handleImageError = (event) => {
   console.error('图片加载错误:', event.target.src)
-  event.target.src = 'https://via.placeholder.com/200x200?text=盲盒'
+  event.target.src = 'https://via.placeholder.com/200x200?text=错误'
 }
 </script>
 
